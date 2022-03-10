@@ -22,12 +22,12 @@ centre de laquelle se trouve un grand plat de spaghetti
 - Afin d’empêcher les philosophes de dupliquer les fourchettes, vous devez protéger
 leur état en mémoire avec un mutex pour chacune d’entre elle.
 
-- La simulation s'arrête et on fail si un philo meurt de fin
+- La simulation s'arrête et on fail si un philo meurt de faim
 
 ## Contraintes arguments du programme
 - 4 args obligatoires, 1 arg optionnel
 ◦ number_of_philosophers : # philosophes = # fourchettes. MINIMUM 1 philo
-- si il n'y a qu'un philo => il n'y a qu'une fourchette, c'est impossible de manger
+	- si il n'y a qu'un philo => il n'y a qu'une fourchette, c'est impossible de manger
 ◦ time_to_die (en millisecondes) : Si un philosophe n’a pas commencé à manger
 time_to_die millisecondes après le début de son précédent repas ou depuis le
 début de la simulation, il meurt.
@@ -39,6 +39,9 @@ les philosophes ont mangé au moins number_of_times_each_philosopher_must_eat
 fois, la simulation prend fin. Si cet argument n’est pas spécifié, alors la simu-
 lation prend fin à la mort d’un philosophe.
 
+==> si il y a 1 arg < 0 ==> on arrête directement le programme
+
+
 ## Objet du jeu global
 - number_of_philosophers
 - time_to_die
@@ -48,10 +51,12 @@ lation prend fin à la mort d’un philosophe.
 - Tableau contenant tous les objets philos
 
 ## Objet philosophe
-- number : Chaque philosophe se voit assigner un numéro entre 1 et number_of_philosophers.
+- number/rank : Chaque philosophe se voit assigner un numéro entre 1 et number_of_philosophers.
 • Le philosophe numéro 1 est assis à côté du philosophe numéro number_of_philosophers.
 Les autres suivent cette logique : philosophe numéro N est assis entre philosophe
 numéro N - 1 et philosophe numéro N + 1
+- status : is_eating, is_sleeping, is_thinking ?
+- number_of_times_I_ate
 
 ## logs
 - il faut afficher tout changement d'état d'un philo, formatté comme suit :

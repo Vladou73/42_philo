@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:31 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/09 17:51:56 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:15:53 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,31 @@
 # include <unistd.h>
 # include <pthread.h>
 
+typedef struct s_fork
+{
+	int		is_used;
+	int		index;
+}	t_fork;
+
+// status 0 = eat, 1 = sleep, 2 = think
+typedef struct s_philo
+{
+	int		index;
+	int		status;
+	int		nb_times_eat;
+}	t_philo;
+
 typedef struct s_game
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*img_player;
-	void	*img_wall;
-	void	*img_bckg;
-	void	*img_exit;
-	void	*img_coll;
-	int		img_width;
-	int		img_height;
-	int		nb_rows;
-	int		nb_cols;
-	char	**map;
-	int		player_pos[2];
-	int		exit_pos[2];
-	int		count_moves;
-	int		count_collectibles;
-	int		collected_collectibles;
+	int		nb_philos;
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
+	int		nb_times_philos_must_eat;
+	void	*philos;
+	void	*forks;
 }	t_game;
 
-//******************** DEFINE KEYS ********************//
-
-# define KEY_ESC	53
-# define KEY_UP	13
-# define KEY_RIGHT 2
-# define KEY_DOWN 	1
-# define KEY_LEFT 	0
 # define RED_CROSS	17
 
 //******************** PARSING MAP FILE ********************//
