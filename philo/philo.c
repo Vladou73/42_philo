@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:12 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/14 17:19:11 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/14 18:07:09 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	ft_init_game_variables(t_game *game, int argc, char **argv)
 		game->philos[i].index = i + 1;
 		game->philos[i].status = 2;
 		game->philos[i].nb_times_eat = 0;
+		game->philos[i].game = game; //chaque philo aura un pointeur qui pointera sur la mémoire de game, pour pouvoir y accéder dans ft_routine
 		i++;
 	}
 
@@ -69,12 +70,49 @@ int	ft_init_game_variables(t_game *game, int argc, char **argv)
 			return (1);
 		i++;
 	}
-
-
-//int pthread_create(pthread_t *restrict thread,const pthread_attr_t *restrict attr,void *(*start_routine)(void *),void *restrict arg);
-
 	return (0);
 }
+
+void	*ft_routine(void *arg)
+{
+	t_philo philo = *(t_philo*)arg;
+	printf("philo.index=%d\n",philo.index);
+	printf("philo.time_to_die=%ld\n",philo.game->time_to_die);
+
+
+	return (arg);
+}
+
+int	ft_create_threads(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->nb_philos)
+	{
+		//int pthread_create(pthread_t *restrict thread,const pthread_attr_t *restrict attr,void *(*start_routine)(void *),void *restrict arg);
+		if (pthread_create(&game->philos[i].thread, NULL, (void*)ft_routine, (void*)&game->philos[i]) != 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_wait_threads(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->nb_philos)
+	{
+		//int pthread_join(pthread_t thread, void **retval);
+		if (pthread_join(game->philos[i].thread, NULL) != 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 
 int	main(int argc, char **argv)
 {
@@ -91,11 +129,19 @@ int	main(int argc, char **argv)
 	}
 
 	printf("nb_philos=%d\n", game.nb_philos);
-	printf("index_first_philo=%d\n", game.philos[0].index);
+	if (ft_create_threads(&game) == 1)
+	{
+		//ft_exit(); //à coder
+		return (1);
+	}
 
 
+	if (ft_wait_threads(&game) == 1)
+	{
+		//ft_exit(); //à coder
+		return (1);
+	}
 	return (0);
-
 }
 
 //Chaque philo doit également etre représenté par un thread : double boucle pour initialiser le thread et attendre qu'il s'arrête

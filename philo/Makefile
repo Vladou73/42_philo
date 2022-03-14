@@ -6,7 +6,7 @@
 #    By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 17:55:57 by vnafissi          #+#    #+#              #
-#    Updated: 2022/03/14 17:17:06 by vnafissi         ###   ########.fr        #
+#    Updated: 2022/03/14 17:49:19 by vnafissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,11 @@
 
 #VARIABLE=VALUE
 CC = clang
-CFLAGS = -Wall -Werror -Wextra -Wconversion
-# -fsanitize=address -fsanitize=undefined
+CFLAGS = -Wall -Werror -Wextra -pthread
+#-fsanitize=thread
+
+#-Wconversion
+# -fsanitize=thread -fsanitize=undefined
 
 NAME = philo
 SRCS = philo.c ft_bzero.c ft_calloc.c ft_atol.c

@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:31 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/14 17:18:54 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/14 18:03:37 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_philo
 	int			status;
 	int			nb_times_eat;
 	pthread_t	thread;
+	struct s_game		*game;
 }	t_philo;
 
 typedef struct s_game
