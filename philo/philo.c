@@ -6,43 +6,98 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:12 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/10 16:36:47 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:19:11 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/philo.h"
-
-int	ft_check_args(int argc, char **argv)
-{
-	int	len;
-
-	if (argc != 2)
-		return (0);
-	len = (int)ft_strlen(argv[1]);
-	if (len < 4)
-		return (0);
-	if (argv[1][len - 1] != 'r' || argv[1][len - 2] != 'e'
-		|| argv[1][len - 3] != 'b' || argv[1][len - 4] != '.')
-		return (0);
-	return (1);
-}
-
-int	main(int argc, char **argv)
-{
-	t_game	game;
-
-}
 
 //Parsing des arguments
 // 1) vérifier que 4 <= argc <= 5 ==> sinon exit
 // 2) vérifier que tous les arguments >= 1 ==> sinon exit
 // 3) stockage des arguments dans l'objet game
 // 4) Si nb_philos = 1, le jeu s'arrête : on ne peut pas jouer avec 1 fourchette
+int	ft_check_args(int argc, char **argv)
+{
+	(void)argc;
+	(void)argv;
+	return (1);
+}
+
 
 //Initialisation des philos
 //Création d'un tableau de philo dans la structure game,
 // du rank 1 au rank number_of_philos.
 // Ces philos sont représentés par des objets
+int	ft_init_game_variables(t_game *game, int argc, char **argv)
+{
+	int	i;
+
+	game->nb_philos = (int)ft_atol(argv[1]);
+	game->time_to_die = ft_atol(argv[2]);
+	game->time_to_eat = ft_atol(argv[3]);
+	game->time_to_sleep = ft_atol(argv[4]);
+
+	if (argc == 6)
+		game->nb_times_philos_must_eat = (int)ft_atol(argv[5]);
+	else
+		game->nb_times_philos_must_eat = -1;
+
+	//initialization philos
+	game->philos = ft_calloc((unsigned int)game->nb_philos, sizeof(t_philo));
+	if (!game->philos)
+		return (1);
+	i = 0;
+
+	while (i < game->nb_philos)
+	{
+		game->philos[i].index = i + 1;
+		game->philos[i].status = 2;
+		game->philos[i].nb_times_eat = 0;
+		i++;
+	}
+
+	//initialization forks
+	game->forks = ft_calloc((unsigned int)game->nb_philos, sizeof(pthread_mutex_t));
+	if (!game->forks)
+		return (1);
+	i = 0;
+	while (i < game->nb_philos)
+	{
+		//int pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr);
+		if (pthread_mutex_init(&(game->forks[i]), NULL) != 0)
+			return (1);
+		i++;
+	}
+
+
+//int pthread_create(pthread_t *restrict thread,const pthread_attr_t *restrict attr,void *(*start_routine)(void *),void *restrict arg);
+
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_game	game;
+	if (!ft_check_args(argc, argv)) //à coder
+	{
+		//ft_exit(); //à coder
+		return (1);
+	}
+	if (ft_init_game_variables(&game, argc, argv) == 1)
+	{
+		//ft_exit(); //à coder
+		return (1);
+	}
+
+	printf("nb_philos=%d\n", game.nb_philos);
+	printf("index_first_philo=%d\n", game.philos[0].index);
+
+
+	return (0);
+
+}
+
 //Chaque philo doit également etre représenté par un thread : double boucle pour initialiser le thread et attendre qu'il s'arrête
 
 //Passage des philos d'un état à l'autre

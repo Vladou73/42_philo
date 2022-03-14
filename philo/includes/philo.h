@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:31 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/10 16:15:53 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:18:54 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,43 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <stdlib.h>
+# include <pthread.h>
 
-typedef struct s_fork
-{
-	int		is_used;
-	int		index;
-}	t_fork;
 
 // status 0 = eat, 1 = sleep, 2 = think
 typedef struct s_philo
 {
-	int		index;
-	int		status;
-	int		nb_times_eat;
+	int			index;
+	int			status;
+	int			nb_times_eat;
+	pthread_t	thread;
 }	t_philo;
 
 typedef struct s_game
 {
-	int		nb_philos;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		nb_times_philos_must_eat;
-	void	*philos;
-	void	*forks;
+	int				nb_philos;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	int				nb_times_philos_must_eat;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
 }	t_game;
 
 # define RED_CROSS	17
 
-//******************** PARSING MAP FILE ********************//
+//******************** MEMORY ********************//
+void	*ft_calloc(size_t n, size_t size);
+void	ft_bzero(void *ptr, size_t n);
+
+
+
+
+
+//******************** PARSING ********************//
+long int	ft_atol(const char *src);
+
 int		ft_map_is_ok(char **map, int nb_rows, int nb_cols);
 char	*ft_read_map(char *str_map, char *filename);
 int		ft_count_elements(char **map, int nb_rows);
