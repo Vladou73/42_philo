@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:12 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/16 19:49:56 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/16 21:47:11 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,124 +22,6 @@ int	ft_check_args(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	return (1);
-}
-
-
-//Initialisation des philos
-//Création d'un tableau de philo dans la structure game,
-// du rank 1 au rank number_of_philos.
-// Ces philos sont représentés par des objets
-int	ft_init_game_variables(t_game *game, int argc, char **argv)
-{
-	int	i;
-
-	game->nb_philos = (int)ft_atol(argv[1]);
-	game->time_to_die = ft_atol(argv[2]);
-	game->time_to_eat = ft_atol(argv[3]);
-	game->time_to_sleep = ft_atol(argv[4]);
-
-	if (argc == 6)
-		game->nb_times_philos_must_eat = (int)ft_atol(argv[5]);
-	else
-		game->nb_times_philos_must_eat = -1;
-
-	//initialization philos
-	game->philos = ft_calloc((unsigned int)game->nb_philos, sizeof(t_philo));
-	if (!game->philos)
-		return (1);
-	i = 0;
-
-	while (i < game->nb_philos)
-	{
-		game->philos[i].index = i + 1;
-		if (game->philos[i].index % 2 == 1) //les philos au nombre impair commencent à manger
-			game->philos[i].status = 2;
-		else
-			game->philos[i].status = 1;
-		game->philos[i].nb_times_eat = 0;
-		game->philos[i].left_fork = game->philos[i].index - 1;
-		game->philos[i].right_fork = game->philos[i].index;
-		if (game->philos[i].index == game->nb_philos)
-			game->philos[i].right_fork = 0;
-		game->philos[i].game = game; //chaque philo aura un pointeur qui pointera sur la mémoire de game, pour pouvoir y accéder dans ft_routine
-		i++;
-	}
-
-	//initialization forks
-	game->forks = ft_calloc((unsigned int)game->nb_philos, sizeof(pthread_mutex_t));
-	if (!game->forks)
-		return (1);
-	i = 0;
-	while (i < game->nb_philos)
-	{
-		//int pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr);
-		if (pthread_mutex_init(&(game->forks[i]), NULL) != 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void ft_start_eating(t_philo *philo)
-{
-	//int pthread_mutex_lock(pthread_mutex_t *mutex);
-	pthread_mutex_lock(&philo->game->forks[philo->left_fork]); //in case lock fails, need to check
-	pthread_mutex_lock(&philo->game->forks[philo->right_fork]); //in case lock fails, need to check
-
-	gettimeofday(&philo->game->current_time, NULL);
-	printf("%ld %d has taken a fork\n", philo->game->current_time.tv_sec * 1000, philo->index); //voir si il faut pas gérer autrement pour la précision des millisecondes
-
-	philo->status = 0;
-
-	gettimeofday(&philo->game->current_time, NULL);
-	printf("%ld %d is eating\n", philo->game->current_time.tv_sec * 1000, philo->index);
-
-	usleep(philo->game->time_to_eat * 1000);
-	pthread_mutex_unlock(&philo->game->forks[philo->left_fork]); //in case unlock fails, need to check
-	pthread_mutex_unlock(&philo->game->forks[philo->right_fork]); //in case unlock fails, need to check
-}
-
-void ft_start_sleeping(t_philo *philo)
-{
-	gettimeofday(&philo->game->current_time, NULL);
-	printf("%ld %d is sleeping\n", philo->game->current_time.tv_sec * 1000, philo->index);
-	philo->status = 1;
-	usleep(philo->game->time_to_sleep * 1000);
-}
-
-void ft_start_thinking(t_philo *philo)
-{
-	gettimeofday(&philo->game->current_time, NULL);
-	printf("%ld %d is thinking\n", philo->game->current_time.tv_sec * 1000, philo->index);
-	philo->status = 2;
-	usleep(2000 * 1000);
-}
-
-void	*ft_routine(void *arg)
-{
-	t_philo philo;
-
-
-	//Need to put in place a while loop.
-	//The condition to go out of this while loop is if a philo is dead ==> put in place the other thread which tests indefinitely if a philo is dead
-
-	philo = *(t_philo*)arg;
-	while (1)
-	{
-		if (philo.status == 2)
-		{
-			ft_start_eating(&philo);
-		}
-		else if (philo.status == 0)
-		{
-			ft_start_sleeping(&philo);
-		}
-		else if (philo.status == 1)
-		{
-			ft_start_thinking(&philo);
-		}
-	}
-	return (arg);
 }
 
 int	ft_create_threads(t_game *game)
@@ -282,13 +164,22 @@ int	main(int argc, char **argv)
 
 
 //COMMENT SET TIME_TO_THINK
+
 // philos  [1, 2, 3, 4]
 // forks [0, 1, 2, 3]
 // time_to_eat = 2000
-// time_to_think = 1000
-// time_to_sleep = ?
+// time_to_sleep = 1000
+// time_to_think = ?
+//philos 1 et 3 commencent à manger : ils mettent time_to_eat avant de passer au statut sleep
+//après time_to_eat, les philos 2 et 4 peuvent commencer à manger ==> time_to_think >= time_to_eat
+//les philos 1 et 3 passent time_to_sleep en train de dormir. parallèlement les philos 2 et 4 mangent pendant time_to_eat.
+//CAS 1 : Si  time_to_eat < time_to_sleep : les philos 2 et 4 finissent de manger et passent à time_to_sleep. Les forks sont dispo pour que les philos 1 et 3 passent directement de sleeping à eating
+	//Si on set time_to_think = time_to_sleep - time_to_eat ça semble pas mal
+//CAS 2 : Si time_to_eat > time_to_sleep : il faut que time_to_think = time_to_eat - time_to_sleep
 
-//philos 1 et 3 commencent à manger
+
+
+
 
 
 

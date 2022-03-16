@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:31 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/16 19:05:27 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/16 21:48:35 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_game
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
+	long			time_to_think;
 	int				nb_times_philos_must_eat;
 	struct timeval	current_time;
 	t_philo			*philos;
@@ -50,25 +51,23 @@ typedef struct s_game
 void	*ft_calloc(size_t n, size_t size);
 void	ft_bzero(void *ptr, size_t n);
 
+//******************** INIT VARIABLES ********************//
+int		ft_init_game_variables(t_game *game, int argc, char **argv);
+int		ft_init_forks(t_game *game);
+int		ft_init_philos(t_game *game);
+void	ft_init_parsed_variables(t_game *game, int argc, char **argv);
 
-
-
+//******************** ROUTING & ACTIONS ********************//
+void	*ft_routine(void *arg);
+void 	ft_start_thinking(t_philo *philo);
+void	ft_start_sleeping(t_philo *philo);
+void	ft_start_eating(t_philo *philo);
 
 //******************** PARSING ********************//
 long int	ft_atol(const char *src);
-
-int		ft_map_is_ok(char **map, int nb_rows, int nb_cols);
-char	*ft_read_map(char *str_map, char *filename);
-int		ft_count_elements(char **map, int nb_rows);
-int		ft_map_is_rectangle(char **map, int nb_cols);
-int		ft_map_is_ok(char **map, int nb_rows, int nb_cols);
-int		ft_is_wall(char c);
-int		ft_char_is_ok(char c);
-int		ft_map_chars_are_ok(char **map, int nb_rows, int nb_cols);
-int		ft_check_args(int argc, char **argv);
+int			ft_check_args(int argc, char **argv);
 
 //******************** HANDLE EXIT ********************//
-int		ft_no_more_collectibles(t_game *game);
 int		clear_program(t_game *game);
 void	ft_check_exit(t_game *game);
 
