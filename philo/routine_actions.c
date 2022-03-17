@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:46:38 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/16 21:47:02 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/17 13:13:35 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void ft_start_eating(t_philo *philo)
 {
 	//int pthread_mutex_lock(pthread_mutex_t *mutex);
-	pthread_mutex_lock(&philo->game->forks[philo->left_fork]); //in case lock fails, need to check
-	pthread_mutex_lock(&philo->game->forks[philo->right_fork]); //in case lock fails, need to check
+	printf("left fork %d locked=%d\n",philo->left_fork, pthread_mutex_lock(&philo->game->forks[philo->left_fork])); //in case lock fails, need to check
+	printf("right fork %d locked=%d\n",philo->right_fork, pthread_mutex_lock(&philo->game->forks[philo->right_fork])); //in case lock fails, need to check
 
 	gettimeofday(&philo->game->current_time, NULL);
 	printf("%ld %d has taken a fork\n", philo->game->current_time.tv_sec * 1000, philo->index); //voir si il faut pas gérer autrement pour la précision des millisecondes
@@ -27,8 +27,11 @@ void ft_start_eating(t_philo *philo)
 	printf("%ld %d is eating\n", philo->game->current_time.tv_sec * 1000, philo->index);
 
 	usleep(philo->game->time_to_eat * 1000);
-	pthread_mutex_unlock(&philo->game->forks[philo->left_fork]); //in case unlock fails, need to check
-	pthread_mutex_unlock(&philo->game->forks[philo->right_fork]); //in case unlock fails, need to check
+	philo->nb_times_eat++;
+	printf("%d ate %d times\n", philo->index, philo->nb_times_eat);
+
+	printf("left fork %d unlocked=%d\n",philo->left_fork, pthread_mutex_unlock(&philo->game->forks[philo->left_fork])); //in case unlock fails, need to check
+	printf("right fork %d unlocked=%d\n",philo->right_fork, pthread_mutex_unlock(&philo->game->forks[philo->right_fork])); //in case unlock fails, need to check
 }
 
 void ft_start_sleeping(t_philo *philo)

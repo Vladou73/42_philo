@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:31 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/16 21:48:35 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/17 12:20:16 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ typedef struct s_game
 
 # define RED_CROSS	17
 
-//******************** MEMORY ********************//
-void	*ft_calloc(size_t n, size_t size);
-void	ft_bzero(void *ptr, size_t n);
+//******************** PARSING ********************//
+long int	ft_atol(const char *src);
+int			ft_check_args(int argc, char **argv);
 
 //******************** INIT VARIABLES ********************//
 int		ft_init_game_variables(t_game *game, int argc, char **argv);
@@ -57,15 +57,15 @@ int		ft_init_forks(t_game *game);
 int		ft_init_philos(t_game *game);
 void	ft_init_parsed_variables(t_game *game, int argc, char **argv);
 
+//******************** MEMORY ********************//
+void	*ft_calloc(size_t n, size_t size);
+void	ft_bzero(void *ptr, size_t n);
+
 //******************** ROUTING & ACTIONS ********************//
 void	*ft_routine(void *arg);
 void 	ft_start_thinking(t_philo *philo);
 void	ft_start_sleeping(t_philo *philo);
 void	ft_start_eating(t_philo *philo);
-
-//******************** PARSING ********************//
-long int	ft_atol(const char *src);
-int			ft_check_args(int argc, char **argv);
 
 //******************** HANDLE EXIT ********************//
 int		clear_program(t_game *game);

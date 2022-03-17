@@ -6,7 +6,7 @@
 #    By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 17:55:57 by vnafissi          #+#    #+#              #
-#    Updated: 2022/03/16 21:46:31 by vnafissi         ###   ########.fr        #
+#    Updated: 2022/03/17 12:20:36 by vnafissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CFLAGS = -Wall -Werror -Wextra -pthread -fsanitize=thread -g
 # -fsanitize=thread -fsanitize=undefined
 
 NAME = philo
-SRCS = philo.c ft_bzero.c ft_calloc.c ft_atol.c init_variables.c routine_actions.c
+SRCS = philo.c ft_bzero.c ft_calloc.c ft_atol.c init_variables.c routine_actions.c check_args.c
 # parse_input.c parse_input2.c init_mlx.c handle_moves.c handle_exit.c
 OBJS=$(SRCS:.c=.o)
 

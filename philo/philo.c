@@ -6,23 +6,13 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:12 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/16 21:47:11 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/17 13:03:12 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/philo.h"
 
-//Parsing des arguments
-// 1) vérifier que 4 <= argc <= 5 ==> sinon exit
-// 2) vérifier que tous les arguments >= 1 ==> sinon exit
-// 3) stockage des arguments dans l'objet game
-// 4) Si nb_philos = 1, le jeu s'arrête : on ne peut pas jouer avec 1 fourchette
-int	ft_check_args(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-	return (1);
-}
+
 
 int	ft_create_threads(t_game *game)
 {
@@ -58,7 +48,7 @@ int	ft_wait_threads(t_game *game)
 int	main(int argc, char **argv)
 {
 	t_game	game;
-	if (!ft_check_args(argc, argv)) //à coder
+	if (ft_check_args(argc, argv)) //à coder
 	{
 		//ft_exit(); //à coder
 		return (1);
@@ -177,6 +167,13 @@ int	main(int argc, char **argv)
 	//Si on set time_to_think = time_to_sleep - time_to_eat ça semble pas mal
 //CAS 2 : Si time_to_eat > time_to_sleep : il faut que time_to_think = time_to_eat - time_to_sleep
 
+
+
+//Autre manière de faire pour éviter les deadlocks?
+//ne pas set de time_to_think spécifique.
+//Une fois que le philo n a fini de dormir:
+//	-> on check les statuts de n-1 et n+1. Si les deux ont fini de manger, go ils mangent
+//	-> quand le philo n a fini de manger, on check les statuts de n-1 et n+1. Si leur statut est thinking, on les passe en manger
 
 
 
