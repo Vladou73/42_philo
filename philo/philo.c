@@ -6,12 +6,11 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:12 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/17 13:03:12 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/17 13:49:04 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/philo.h"
-
 
 
 int	ft_create_threads(t_game *game)
@@ -19,13 +18,17 @@ int	ft_create_threads(t_game *game)
 	int	i;
 
 	i = 0;
-	while (i < game->nb_philos)
+	while (i < game->nb_philos) //threads representing philos
 	{
 		//int pthread_create(pthread_t *restrict thread,const pthread_attr_t *restrict attr,void *(*start_routine)(void *),void *restrict arg);
 		if (pthread_create(&game->philos[i].thread, NULL, (void*)ft_routine, (void*)&game->philos[i]) != 0)
 			return (1);
 		i++;
 	}
+	//thread to check if a philo is dead
+	if (pthread_create(&game->dead_thread, NULL, (void*)ft_dead_routine, (void*)&game) != 0)
+		return (1);
+
 	return (0);
 }
 
@@ -181,6 +184,6 @@ int	main(int argc, char **argv)
 
 
 
-//Vérifier si un philo est mort et arrêter le jeu le cas échéant
+//FIN DE LA GAME : Vérifier si un philo est mort et arrêter le jeu le cas échéant
 //faire un thread à part qui tourne en permanence, dont le seul but est de checker si un philo est mort et d'appeler la fin du programme
 //faire une fonction qui gère la fin de la partie : arrêt de tous les threads, free de toutes les mémoires, exit proprement (sans la fonction exit)

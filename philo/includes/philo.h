@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:31 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/17 12:20:16 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/17 13:37:19 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_philo
 	int				index;
 	int				status;
 	int				nb_times_eat;
+	long			last_time_ate;
 	int				left_fork;
 	int				right_fork;
 	pthread_t		thread;
@@ -43,9 +44,8 @@ typedef struct s_game
 	struct timeval	current_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
+	pthread_t		dead_thread;
 }	t_game;
-
-# define RED_CROSS	17
 
 //******************** PARSING ********************//
 long int	ft_atol(const char *src);
@@ -61,8 +61,9 @@ void	ft_init_parsed_variables(t_game *game, int argc, char **argv);
 void	*ft_calloc(size_t n, size_t size);
 void	ft_bzero(void *ptr, size_t n);
 
-//******************** ROUTING & ACTIONS ********************//
+//******************** ROUTINE & ACTIONS ********************//
 void	*ft_routine(void *arg);
+void	*ft_dead_routine(void *arg);
 void 	ft_start_thinking(t_philo *philo);
 void	ft_start_sleeping(t_philo *philo);
 void	ft_start_eating(t_philo *philo);
