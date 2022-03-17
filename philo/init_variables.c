@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:35:08 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/16 21:53:01 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:46:34 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ int	ft_init_philos(t_game *game)
 		game->philos[i].nb_times_eat = 0;
 		game->philos[i].left_fork = game->philos[i].index - 1;
 		game->philos[i].right_fork = game->philos[i].index;
-
 		if (game->philos[i].index == game->nb_philos)
 			game->philos[i].right_fork = 0;
+		if (pthread_mutex_init(&game->philos[i].lock_philo, NULL) != 0)
+			return (1);
 		game->philos[i].game = game; //chaque philo aura un pointeur qui pointera sur la mémoire de game, pour pouvoir y accéder dans ft_routine
 		i++;
 	}

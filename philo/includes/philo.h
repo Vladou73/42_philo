@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:31 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/17 13:37:19 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:43:41 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	pthread_t		thread;
+	pthread_mutex_t	lock_philo;
 	struct s_game	*game;
 }	t_philo;
 
@@ -41,7 +42,6 @@ typedef struct s_game
 	long			time_to_sleep;
 	long			time_to_think;
 	int				nb_times_philos_must_eat;
-	struct timeval	current_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_t		dead_thread;
@@ -57,9 +57,11 @@ int		ft_init_forks(t_game *game);
 int		ft_init_philos(t_game *game);
 void	ft_init_parsed_variables(t_game *game, int argc, char **argv);
 
-//******************** MEMORY ********************//
-void	*ft_calloc(size_t n, size_t size);
-void	ft_bzero(void *ptr, size_t n);
+//******************** MEMORY AND TIME ********************//
+void		*ft_calloc(size_t n, size_t size);
+void		ft_bzero(void *ptr, size_t n);
+long int	ft_gettimeofday_ms(void);
+
 
 //******************** ROUTINE & ACTIONS ********************//
 void	*ft_routine(void *arg);

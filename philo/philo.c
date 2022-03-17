@@ -6,11 +6,13 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:12 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/17 13:49:04 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:13:56 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/philo.h"
+
+//Voir si la gestion du cas nb_philos = 1 est bon ou pas. Ou si faut faire tourner la simu et laisser mourir le philo
 
 
 int	ft_create_threads(t_game *game)
@@ -26,7 +28,7 @@ int	ft_create_threads(t_game *game)
 		i++;
 	}
 	//thread to check if a philo is dead
-	if (pthread_create(&game->dead_thread, NULL, (void*)ft_dead_routine, (void*)&game) != 0)
+	if (pthread_create(&game->dead_thread, NULL, (void*)ft_dead_routine, (void*)&game->philos[0]) != 0)
 		return (1);
 
 	return (0);
@@ -37,6 +39,9 @@ int	ft_wait_threads(t_game *game)
 	int	i;
 
 	i = 0;
+	//thread to check if a philo is dead
+	if (pthread_join(game->dead_thread, NULL) != 0)
+		return (1);
 	while (i < game->nb_philos)
 	{
 		//int pthread_join(pthread_t thread, void **retval);

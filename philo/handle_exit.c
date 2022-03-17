@@ -6,11 +6,11 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 18:03:55 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/02/24 19:16:48 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:28:37 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/so_long.h"
+#include "./includes/philo.h"
 
 int	ft_no_more_collectibles(t_game *game)
 {
