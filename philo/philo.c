@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:12 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/17 18:13:56 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/21 14:36:55 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ int	ft_create_threads(t_game *game)
 	while (i < game->nb_philos) //threads representing philos
 	{
 		//int pthread_create(pthread_t *restrict thread,const pthread_attr_t *restrict attr,void *(*start_routine)(void *),void *restrict arg);
-		if (pthread_create(&game->philos[i].thread, NULL, (void*)ft_routine, (void*)&game->philos[i]) != 0)
+		if (pthread_create(&game->philos[i].thread, NULL, (void*)ft_routine, (void*)&(game->philos[i])) != 0)
 			return (1);
 		i++;
 	}
 	//thread to check if a philo is dead
-	if (pthread_create(&game->dead_thread, NULL, (void*)ft_dead_routine, (void*)&game->philos[0]) != 0)
+	if (pthread_create(&game->dead_thread, NULL, (void*)ft_dead_routine, (void*)game) != 0)
+	//if (pthread_create(&game->dead_thread, NULL, (void*)ft_dead_routine, (void*)&game->philos[0]) != 0)
+	
 		return (1);
 
 	return (0);
@@ -56,6 +58,7 @@ int	ft_wait_threads(t_game *game)
 int	main(int argc, char **argv)
 {
 	t_game	game;
+	
 	if (ft_check_args(argc, argv)) //à coder
 	{
 		//ft_exit(); //à coder

@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:35:08 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/17 18:46:34 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/21 14:39:07 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,11 @@
 
 void	ft_init_parsed_variables(t_game *game, int argc, char **argv)
 {
+	game->start_time = ft_gettimeofday_ms();
 	game->nb_philos = (int)ft_atol(argv[1]);
 	game->time_to_die = ft_atol(argv[2]);
 	game->time_to_eat = ft_atol(argv[3]);
 	game->time_to_sleep = ft_atol(argv[4]);
-	if (game->time_to_eat > game->time_to_sleep)
-		game->time_to_think = game->time_to_eat - game->time_to_sleep + 500;
-	else
-		game->time_to_think = game->time_to_sleep - game->time_to_eat + 500;
-
 	if (argc == 6)
 		game->nb_times_philos_must_eat = (int)ft_atol(argv[5]);
 	else
@@ -41,15 +37,6 @@ int	ft_init_philos(t_game *game)
 	while (i < game->nb_philos)
 	{
 		game->philos[i].index = i + 1;
-		if (game->philos[i].index % 2 == 1) //les philos au nombre impair commencent à manger
-			game->philos[i].status = 2;
-		else
-		{
-			if (game->time_to_eat > game->time_to_sleep)
-				game->philos[i].status = 0;
-			else
-				game->philos[i].status = 1;
-		}
 		game->philos[i].nb_times_eat = 0;
 		game->philos[i].left_fork = game->philos[i].index - 1;
 		game->philos[i].right_fork = game->philos[i].index;

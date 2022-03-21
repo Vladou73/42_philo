@@ -6,98 +6,90 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:46:38 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/17 18:52:09 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/21 15:10:10 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/philo.h"
 
-void ft_start_eating(t_philo *philo)
+void ft_start_eating(t_philo *philo, int first_fork, int second_fork)
 {
 	//int pthread_mutex_lock(pthread_mutex_t *mutex);
-	pthread_mutex_lock(&philo->game->forks[philo->left_fork]); //in case lock fails, need to check
-	printf("%ld %d has taken a fork\n", ft_gettimeofday_ms(), philo->index);
-	pthread_mutex_lock(&philo->game->forks[philo->right_fork]); //in case lock fails, need to check
-	printf("%ld %d has taken a fork\n", ft_gettimeofday_ms(), philo->index);
+	pthread_mutex_lock(&philo->game->forks[first_fork]); //in case lock fails, need to check
+	printf("%ld %d has taken a fork\n", ft_gettime_since_game_start(philo->game->start_time), philo->index);
+	pthread_mutex_lock(&philo->game->forks[second_fork]); //in case lock fails, need to check
+	printf("%ld %d has taken a fork\n", ft_gettime_since_game_start(philo->game->start_time), philo->index);
 	
 	pthread_mutex_lock(&philo->lock_philo);
-	philo->status = 0;
-	printf("%ld %d is eating\n", ft_gettimeofday_ms(), philo->index);
-
+	printf("%ld %d is eating\n", ft_gettime_since_game_start(philo->game->start_time), philo->index);
 	usleep(philo->game->time_to_eat * 1000);
 	philo->nb_times_eat++;
-	printf("%d ate %d times\n", philo->index, philo->nb_times_eat);
+	philo->last_time_ate = ft_gettime_since_game_start(philo->game->start_time);
+//	printf("%d ate %d times\n", philo->index, philo->nb_times_eat);
 	pthread_mutex_unlock(&philo->lock_philo);
 	
-	philo->last_time_ate = ft_gettimeofday_ms();
-	pthread_mutex_unlock(&philo->game->forks[philo->left_fork]); //in case unlock fails, need to check
-	pthread_mutex_unlock(&philo->game->forks[philo->right_fork]); //in case unlock fails, need to check
+	pthread_mutex_unlock(&philo->game->forks[first_fork]); //in case unlock fails, need to check
+	pthread_mutex_unlock(&philo->game->forks[second_fork]); //in case unlock fails, need to check
 }
 
 void ft_start_sleeping(t_philo *philo)
 {
-	printf("%ld %d is sleeping\n", ft_gettimeofday_ms(), philo->index);
-	philo->status = 1;
+	printf("%ld %d is sleeping\n", ft_gettime_since_game_start(philo->game->start_time), philo->index);
 	usleep(philo->game->time_to_sleep * 1000);
 }
 
 void ft_start_thinking(t_philo *philo)
 {
-	printf("%ld %d is thinking\n", ft_gettimeofday_ms(), philo->index);
-	philo->status = 2;
-	usleep(philo->game->time_to_think * 1000);
+	printf("%ld %d is thinking\n", ft_gettime_since_game_start(philo->game->start_time), philo->index);
 }
 
-void	*ft_dead_routine(void *arg)
+int	ft_dead_routine(t_game *game)
 {
 	int		i;
-	usleep(200);
-	
-	//POURQUOI CA NE FONCTIONNE PAS AVEC LA STRUCTURE game DIRECTEMENT ?
-	//game = *(t_game*)arg;
-	t_game	game;
-	game = *(((t_philo*)arg)->game);
+	usleep(20);
 	
 	//The condition to go out of this while loop is if a philo is dead ==> put in place the other thread which tests indefinitely if a philo is dead
 	while (1)
 	{
 		i = 0;
-		while (i < game.nb_philos)
+		while (i < game->nb_philos)
 		{
-			pthread_mutex_lock(&game.philos[i].lock_philo);
-			printf("%d ate for the last time : %ld\n", game.philos[i].index, game.philos[i].last_time_ate);
-			pthread_mutex_unlock(&game.philos[i].lock_philo);
+			pthread_mutex_lock(&game->philos[i].lock_philo);
+			printf("philo %d // time_to_die=%ld // ate_for_the_last_time=%ld\n", game->philos[i].index, game->time_to_die, game->philos[i].last_time_ate);
+			printf("time_since_game_started=%ld\n", game->philos[i].last_time_ate + ft_gettime_since_game_start(game->start_time));
+			pthread_mutex_unlock(&game->philos[i].lock_philo);
 			i++;
 		}
-		usleep(10000 * 1000);
+		usleep(500);
 	}
-	return (arg);
+	return (0);
 }
 
+//5000  
+//time to die 7000
+//
 
-void	*ft_routine(void *arg)
+
+
+int	ft_routine(t_philo *philo)
 {
-	t_philo philo;
-
 	//The condition to go out of this while loop is if a philo is dead ==> put in place the other thread which tests indefinitely if a philo is dead
-	philo = *(t_philo*)arg;
 	while (1)
 	{
-		if (philo.status == 2)
+		pthread_mutex_lock(&philo->lock_philo);
+		if (philo->index % 2 == 0)
 		{
-			ft_start_eating(&philo);
+			pthread_mutex_unlock(&philo->lock_philo);
+			ft_start_eating(philo, philo->left_fork, philo->right_fork); //2nd argument is the 1st fork to block
 		}
-		else if (philo.status == 0)
+		else
 		{
-			ft_start_sleeping(&philo);
+			pthread_mutex_unlock(&philo->lock_philo);
+			ft_start_eating(philo, philo->right_fork, philo->left_fork);	
 		}
-		else if (philo.status == 1)
-		{
-			ft_start_thinking(&philo);
-		}
-		printf("last time philo %d ate=%ld\n",philo.index, philo.last_time_ate);
-		
+		ft_start_sleeping(philo);
+		ft_start_thinking(philo);
 		usleep(1);
 	}
-	return (arg);
+	return (0);
 }
