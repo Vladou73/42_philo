@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:31 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/21 15:14:54 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/21 19:10:32 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_philo
 	int				index;
 	int				status;
 	int				nb_times_eat;
-	long			last_time_ate;
+	long			last_meal;
 	int				left_fork;
 	int				right_fork;
 	pthread_t		thread;
@@ -42,6 +42,7 @@ typedef struct s_game
 	long			time_to_sleep;
 	int				nb_times_philos_must_eat;
 	long			start_time;
+	int				dead_philo;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_t		dead_thread;
@@ -62,15 +63,14 @@ void		*ft_calloc(size_t n, size_t size);
 void		ft_bzero(void *ptr, size_t n);
 long int	ft_gettimeofday_ms(void);
 long int	ft_gettime_since_game_start(long start_time);
-long int ft_gettime_since_last_meal(long last_meal);
-
 
 //******************** ROUTINE & ACTIONS ********************//
 int		ft_routine(t_philo *philo);
 int		ft_dead_routine(t_game *game);
-void 	ft_start_thinking(t_philo *philo);
-void	ft_start_sleeping(t_philo *philo);
-void	ft_start_eating(t_philo *philo, int left_fork, int right_fork);
+int 	ft_start_thinking(t_philo *philo);
+int		ft_start_sleeping(t_philo *philo);
+int		ft_start_eating(t_philo *philo, int left_fork, int right_fork);
+int		is_a_philo_dead(t_philo *philo);
 
 //******************** HANDLE EXIT ********************//
 int		clear_program(t_game *game);

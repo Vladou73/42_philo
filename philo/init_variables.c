@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:35:08 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/21 14:39:07 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/21 17:57:16 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_init_parsed_variables(t_game *game, int argc, char **argv)
 		game->nb_times_philos_must_eat = (int)ft_atol(argv[5]);
 	else
 		game->nb_times_philos_must_eat = -1;
+	game->dead_philo=0;
 }
 
 int	ft_init_philos(t_game *game)

@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 15:44:31 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/21 15:14:31 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/21 17:41:48 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,4 @@ long int ft_gettime_since_game_start(long start_time)
 	
 	timeofday_ms = ft_gettimeofday_ms();
 	return (timeofday_ms - start_time);
-}
-
-long int ft_gettime_since_last_meal(long last_meal)
-{
-	long timeofday_ms;
-	
-	timeofday_ms = ft_gettimeofday_ms();
-	return (timeofday_ms - last_meal);
 }
