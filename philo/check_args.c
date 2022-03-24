@@ -32,7 +32,8 @@ int	ft_check_args(int argc, char **argv)
 	if (argc == 6)
 	{
 		if (atol(argv[5]) < 1)
-		{	printf("last arg has a wrong value");
+		{	
+			printf("last arg has a wrong value");
 			return (1);
 		}
 	}

@@ -77,6 +77,8 @@ int		is_a_philo_dead(t_philo *philo);
 
 //******************** UTILITIES ********************//
 void	ft_printf(t_philo *philo, char* str);
+int	ft_all_philos_have_eaten_enough(t_game *game);
+
 
 //******************** HANDLE EXIT ********************//
 int		clear_program(t_game *game);
