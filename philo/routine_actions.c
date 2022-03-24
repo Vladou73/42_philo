@@ -15,7 +15,7 @@ int	ft_dead_routine(t_game *game)
 {
 	int		i;
 
-	usleep(2);	
+	ft_usleep(1);	
 	while (1)
 	{
 		i = 0;
@@ -34,22 +34,25 @@ int	ft_dead_routine(t_game *game)
 			pthread_mutex_unlock(&game->philos[i].lock_philo);
 			i++;
 		}
-		usleep(2);
+		ft_usleep(1);
 	}
 	return (0);
 }
 
+void	ft_printf(t_philo *philo, char* str)
+{
+	if (!is_a_philo_dead(philo))
+		printf("%ld %d %s\n", ft_gettime_since_game_start(philo->game->start_time), philo->index, str);
+}
+
 int	is_a_philo_dead(t_philo *philo)
 {
-	//pthread_mutex_lock(&philo->lock_philo);
 	pthread_mutex_lock(&philo->game->lock_death);
 	if (philo->game->dead_philo)
 	{
-		//pthread_mutex_unlock(&philo->lock_philo);
 		pthread_mutex_unlock(&philo->game->lock_death);
 		return (1);
 	}
-	//pthread_mutex_unlock(&philo->lock_philo);
 	pthread_mutex_unlock(&philo->game->lock_death);
 	return (0);
 }
@@ -59,26 +62,19 @@ int	ft_routine(t_philo *philo)
 	//The condition to go out of this while loop is if a philo is dead ==> put in place the other thread which tests indefinitely if a philo is dead
 	while (1)
 	{
-		//printf("dead_philo=%d\n", philo->game->dead_philo);
-		//if (is_a_philo_dead(philo))
-		pthread_mutex_lock(&philo->game->lock_death);
-		if (philo->game->dead_philo == 1)
-		{
-			pthread_mutex_unlock(&philo->game->lock_death);
+		if (is_a_philo_dead(philo))
 			return (1);
-		}
 		else
 		{
-			pthread_mutex_unlock(&philo->game->lock_death);
-			//pthread_mutex_unlock(&philo->lock_philo);		
 			if (philo->index % 2 == 0)
 				ft_start_eating(philo, philo->left_fork, philo->right_fork); //2nd arg is the 1st fork to block, 3rd arg is the 2nd fork to block
 			else
 				ft_start_eating(philo, philo->right_fork, philo->left_fork);	
 			ft_start_sleeping(philo);
 			ft_start_thinking(philo);	
+			ft_usleep(1);
 		}
-		usleep(1);
+		
 	}
 	return (0);
 }

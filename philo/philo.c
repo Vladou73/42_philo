@@ -22,7 +22,6 @@ int	ft_create_threads(t_game *game)
 	i = 0;
 	while (i < game->nb_philos) //threads representing philos
 	{
-		printf("thread %d launched\n", i);
 		if (pthread_create(&game->philos[i].thread, NULL, (void*)ft_routine, (void*)&(game->philos[i])) != 0)
 			return (1);
 		i++;
@@ -67,8 +66,6 @@ int	main(int argc, char **argv)
 		//ft_exit(); //à coder
 		return (1);
 	}
-
-	printf("nb_philos=%d\n\n", game.nb_philos);
 
 	if (ft_create_threads(&game) == 1)
 	{

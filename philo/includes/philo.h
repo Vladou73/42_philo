@@ -75,6 +75,9 @@ int		ft_start_sleeping(t_philo *philo);
 int		ft_start_eating(t_philo *philo, int left_fork, int right_fork);
 int		is_a_philo_dead(t_philo *philo);
 
+//******************** UTILITIES ********************//
+void	ft_printf(t_philo *philo, char* str);
+
 //******************** HANDLE EXIT ********************//
 int		clear_program(t_game *game);
 void	ft_check_exit(t_game *game);
