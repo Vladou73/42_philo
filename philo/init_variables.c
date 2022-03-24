@@ -39,11 +39,14 @@ int	ft_init_philos(t_game *game)
 	{
 		game->philos[i].index = i + 1;
 		game->philos[i].nb_times_eat = 0;
+		game->philos[i].last_meal = ft_gettimeofday_ms();
 		game->philos[i].left_fork = game->philos[i].index - 1;
 		game->philos[i].right_fork = game->philos[i].index;
 		if (game->philos[i].index == game->nb_philos)
 			game->philos[i].right_fork = 0;
 		if (pthread_mutex_init(&game->philos[i].lock_philo, NULL) != 0)
+			return (1);
+		if (pthread_mutex_init(&game->lock_death, NULL) != 0)
 			return (1);
 		game->philos[i].game = game; //chaque philo aura un pointeur qui pointera sur la mémoire de game, pour pouvoir y accéder dans ft_routine
 		i++;

@@ -22,14 +22,13 @@ int	ft_create_threads(t_game *game)
 	i = 0;
 	while (i < game->nb_philos) //threads representing philos
 	{
-		//int pthread_create(pthread_t *restrict thread,const pthread_attr_t *restrict attr,void *(*start_routine)(void *),void *restrict arg);
+		printf("thread %d launched\n", i);
 		if (pthread_create(&game->philos[i].thread, NULL, (void*)ft_routine, (void*)&(game->philos[i])) != 0)
 			return (1);
 		i++;
 	}
 	//thread to check if a philo is dead
 	if (pthread_create(&game->dead_thread, NULL, (void*)ft_dead_routine, (void*)game) != 0)
-	//if (pthread_create(&game->dead_thread, NULL, (void*)ft_dead_routine, (void*)&game->philos[0]) != 0)
 		return (1);
 
 	return (0);
@@ -89,7 +88,7 @@ int	main(int argc, char **argv)
 //Chaque philo doit également etre représenté par un thread : double boucle pour initialiser le thread et attendre qu'il s'arrête
 
 //Passage des philos d'un état à l'autre
-//pour le changement d'état des philos, faire une fonction qui compte le temps (équivalent à usleep) et au bout du bon temps écoulé, change l'état du philo automatiquement
+//pour le changement d'état des philos, faire une fonction qui compte le temps (équivalent à ft_usleep) et au bout du bon temps écoulé, change l'état du philo automatiquement
 
 //Initialisation des forks
 // il faut un tableau de forks dans la structure game

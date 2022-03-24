@@ -26,3 +26,13 @@ long int ft_gettime_since_game_start(long start_time)
 	timeofday_ms = ft_gettimeofday_ms();
 	return (timeofday_ms - start_time);
 }
+
+void	ft_usleep(long int time)
+{
+	long int	start;
+
+	//start = 0;
+	start = ft_gettimeofday_ms();
+	while (ft_gettimeofday_ms() - start < time)
+		usleep(500);
+}

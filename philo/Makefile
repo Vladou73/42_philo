@@ -20,7 +20,7 @@ CFLAGS = -Wall -Werror -Wextra -pthread -fsanitize=thread -g
 # -fsanitize=thread -fsanitize=undefined
 
 NAME = philo
-SRCS = philo.c ft_bzero.c ft_calloc.c ft_atol.c init_variables.c routine_actions.c check_args.c calc_time.c
+SRCS = philo.c ft_bzero.c ft_calloc.c ft_atol.c init_variables.c routine_actions.c check_args.c calc_time.c ft_actions.c
 # parse_input.c parse_input2.c init_mlx.c handle_moves.c handle_exit.c
 OBJS=$(SRCS:.c=.o)
 

@@ -45,6 +45,7 @@ typedef struct s_game
 	int				dead_philo;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	lock_death;
 	pthread_t		dead_thread;
 }	t_game;
 
@@ -63,6 +64,8 @@ void		*ft_calloc(size_t n, size_t size);
 void		ft_bzero(void *ptr, size_t n);
 long int	ft_gettimeofday_ms(void);
 long int	ft_gettime_since_game_start(long start_time);
+void	ft_usleep(long int time);
+
 
 //******************** ROUTINE & ACTIONS ********************//
 int		ft_routine(t_philo *philo);
