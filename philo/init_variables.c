@@ -12,7 +12,6 @@
 
 #include "./includes/philo.h"
 
-
 void	ft_init_parsed_variables(t_game *game, int argc, char **argv)
 {
 	game->start_time = ft_gettimeofday_ms();
@@ -48,7 +47,7 @@ int	ft_init_philos(t_game *game)
 			return (1);
 		if (pthread_mutex_init(&game->lock_death, NULL) != 0)
 			return (1);
-		game->philos[i].game = game; //chaque philo aura un pointeur qui pointera sur la mémoire de game, pour pouvoir y accéder dans ft_routine
+		game->philos[i].game = game;
 		i++;
 	}
 	return (0);
@@ -64,7 +63,6 @@ int	ft_init_forks(t_game *game)
 	i = 0;
 	while (i < game->nb_philos)
 	{
-		//int pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr);
 		if (pthread_mutex_init(&(game->forks[i]), NULL) != 0)
 			return (1);
 		i++;
@@ -72,10 +70,6 @@ int	ft_init_forks(t_game *game)
 	return (0);
 }
 
-//Initialisation des philos
-//Création d'un tableau de philo dans la structure game,
-// du rank 1 au rank number_of_philos.
-// Ces philos sont représentés par des objets
 int	ft_init_game_variables(t_game *game, int argc, char **argv)
 {
 	ft_init_parsed_variables(game, argc, argv);
