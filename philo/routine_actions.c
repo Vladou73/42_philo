@@ -83,7 +83,6 @@ int	ft_all_philos_have_eaten_enough(t_game *game)
 
 int	ft_routine(t_philo *philo)
 {
-	//The condition to go out of this while loop is if a philo is dead ==> put in place the other thread which tests indefinitely if a philo is dead
 	while (1)
 	{
 		if (is_a_philo_dead(philo))
@@ -94,7 +93,7 @@ int	ft_routine(t_philo *philo)
 				ft_start_eating(philo, philo->left_fork, philo->right_fork); //2nd arg is the 1st fork to block, 3rd arg is the 2nd fork to block
 			else
 				ft_start_eating(philo, philo->right_fork, philo->left_fork);	
-			if (ft_all_philos_have_eaten_enough(philo->game) == 1)
+			if (philo->nb_times_eat >= philo->game->nb_times_philos_must_eat && philo->game->nb_times_philos_must_eat > 0)
 				return (0);
 			ft_start_sleeping(philo);
 			ft_start_thinking(philo);
