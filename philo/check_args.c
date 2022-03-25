@@ -24,7 +24,7 @@ int	ft_check_args(int argc, char **argv)
 		printf("wrong number of args");
 		return (1);
 	}
-	if (atol(argv[1]) < 2 || atol(argv[2]) < 1 || atol(argv[3]) < 1 || atol(argv[4]) < 1)
+	if (atol(argv[1]) < 1 || atol(argv[2]) < 1 || atol(argv[3]) < 1 || atol(argv[4]) < 1)
 	{
 		printf("an argument has a wrong value");
 		return (1);

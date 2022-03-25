@@ -14,17 +14,16 @@
 int	ft_dead_routine(t_game *game)
 {
 	int		i;
-	
-	ft_usleep(1);	
+	ft_usleep(1);
 	while (1)
 	{
-		if (!ft_all_philos_have_eaten_enough(game))
+		if (ft_all_philos_have_eaten_enough(game))
 			return (0);
 		i = 0;
 		while (i < game->nb_philos)
 		{
 			pthread_mutex_lock(&game->philos[i].lock_philo);
-			if (ft_gettimeofday_ms() - game->philos[i].last_meal >= game->time_to_die && game->dead_philo == 0 && game->philos[i].nb_times_eat < game->nb_times_philos_must_eat)
+			if (ft_gettimeofday_ms() - game->philos[i].last_meal >= game->time_to_die && game->dead_philo == 0)
 			{
 				pthread_mutex_unlock(&game->philos[i].lock_philo);
 				pthread_mutex_lock(&game->lock_death);	
@@ -83,21 +82,24 @@ int	ft_all_philos_have_eaten_enough(t_game *game)
 
 int	ft_routine(t_philo *philo)
 {
-	while (1)
+	if (philo->game->nb_philos > 1)
 	{
-		if (is_a_philo_dead(philo))
-			return (1);
-		else
+		while (1)
 		{
-			if (philo->index % 2 == 0)
-				ft_start_eating(philo, philo->left_fork, philo->right_fork); //2nd arg is the 1st fork to block, 3rd arg is the 2nd fork to block
+			if (is_a_philo_dead(philo))
+				return (1);
 			else
-				ft_start_eating(philo, philo->right_fork, philo->left_fork);	
-			if (philo->nb_times_eat >= philo->game->nb_times_philos_must_eat && philo->game->nb_times_philos_must_eat > 0)
-				return (0);
-			ft_start_sleeping(philo);
-			ft_start_thinking(philo);
-			ft_usleep(1);
+			{
+				if (philo->index % 2 == 0)
+					ft_start_eating(philo, philo->left_fork, philo->right_fork); //2nd arg is the 1st fork to block, 3rd arg is the 2nd fork to block
+				else
+					ft_start_eating(philo, philo->right_fork, philo->left_fork);	
+				if (philo->nb_times_eat >= philo->game->nb_times_philos_must_eat && philo->game->nb_times_philos_must_eat > 0)
+					return (0);
+				ft_start_sleeping(philo);
+				ft_start_thinking(philo);
+				ft_usleep(1);
+			}
 		}
 	}
 	return (0);
