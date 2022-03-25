@@ -52,6 +52,8 @@ typedef struct s_game
 //******************** PARSING ********************//
 long int	ft_atol(const char *src);
 int			ft_check_args(int argc, char **argv);
+int	array_has_only_digits(char *arr);
+
 
 //******************** INIT VARIABLES ********************//
 int		ft_init_game_variables(t_game *game, int argc, char **argv);
@@ -64,7 +66,7 @@ void		*ft_calloc(size_t n, size_t size);
 void		ft_bzero(void *ptr, size_t n);
 long int	ft_gettimeofday_ms(void);
 long int	ft_gettime_since_game_start(long start_time);
-void	ft_usleep(long int time);
+void		ft_usleep(long int time, t_philo *philo);
 
 
 //******************** ROUTINE & ACTIONS ********************//

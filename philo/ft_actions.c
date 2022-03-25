@@ -12,7 +12,7 @@ int ft_start_eating(t_philo *philo, int first_fork, int second_fork)
 	ft_printf(philo, "has taken a fork");
 
 	ft_printf(philo, "is eating");
-	ft_usleep(philo->game->time_to_eat);
+	ft_usleep(philo->game->time_to_eat, philo);
 	
     pthread_mutex_lock(&philo->lock_philo);
 	philo->nb_times_eat++;
@@ -28,7 +28,7 @@ int ft_start_eating(t_philo *philo, int first_fork, int second_fork)
 int	ft_start_sleeping(t_philo *philo)
 {
 	ft_printf(philo, "is sleeping");
-	ft_usleep(philo->game->time_to_sleep);
+	ft_usleep(philo->game->time_to_sleep, philo);
 	return (0);
 }
 

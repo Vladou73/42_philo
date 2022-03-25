@@ -27,12 +27,16 @@ long int ft_gettime_since_game_start(long start_time)
 	return (timeofday_ms - start_time);
 }
 
-void	ft_usleep(long int time)
+void	ft_usleep(long int time, t_philo *philo)
 {
 	long int	start;
 
 	//start = 0;
 	start = ft_gettimeofday_ms();
 	while (ft_gettimeofday_ms() - start < time)
+	{
 		usleep(500);
+		if (is_a_philo_dead(philo))
+			break;
+	}
 }

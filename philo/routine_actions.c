@@ -14,7 +14,7 @@
 int	ft_dead_routine(t_game *game)
 {
 	int		i;
-	ft_usleep(1);
+	//ft_usleep(1, philo);
 	while (1)
 	{
 		if (ft_all_philos_have_eaten_enough(game))
@@ -34,8 +34,8 @@ int	ft_dead_routine(t_game *game)
 			}
 			pthread_mutex_unlock(&game->philos[i].lock_philo);
 			i++;
+			//ft_usleep(1, &game->philos[i]);
 		}
-		ft_usleep(1);
 	}
 	return (0);
 }
@@ -91,14 +91,14 @@ int	ft_routine(t_philo *philo)
 			else
 			{
 				if (philo->index % 2 == 0)
-					ft_start_eating(philo, philo->left_fork, philo->right_fork); //2nd arg is the 1st fork to block, 3rd arg is the 2nd fork to block
+					ft_start_eating(philo, philo->left_fork, philo->right_fork);
 				else
 					ft_start_eating(philo, philo->right_fork, philo->left_fork);	
-				if (philo->nb_times_eat >= philo->game->nb_times_philos_must_eat && philo->game->nb_times_philos_must_eat > 0)
+				if (philo->nb_times_eat >= philo->game->nb_times_philos_must_eat && philo->game->nb_times_philos_must_eat >= 0)
 					return (0);
 				ft_start_sleeping(philo);
 				ft_start_thinking(philo);
-				ft_usleep(1);
+				ft_usleep(1, philo);
 			}
 		}
 	}

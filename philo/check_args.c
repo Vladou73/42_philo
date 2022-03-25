@@ -12,26 +12,56 @@
 
 #include "./includes/philo.h"
 
-//Parsing des arguments
-// 1) vérifier que 5 <= argc <= 6 ==> sinon exit
-// 2) vérifier que tous les arguments >= 1 ==> sinon exit
-// 3) stockage des arguments dans l'objet game
-// 4) Si nb_philos = 1, le jeu s'arrête : on ne peut pas jouer avec 1 fourchette
+int	ft_isdigit(int c)
+{
+	if (c >= 48 && c <= 57)
+		return (1);
+	return (0);
+}
+
+int	array_has_only_digits(char *arr)
+{
+	int	j;
+
+	j = 0;
+	if (!arr[j])
+		return (0);
+	while (arr[j])
+	{
+		if (!ft_isdigit(arr[j]))
+			return (0);
+		j++;
+	}
+	return (1);
+}
+
 int	ft_check_args(int argc, char **argv)
 {
+	int	i;
+
 	if (argc < 5 || argc > 6)
 	{
 		printf("wrong number of args");
 		return (1);
 	}
-	if (atol(argv[1]) < 1 || atol(argv[2]) < 1 || atol(argv[3]) < 1 || atol(argv[4]) < 1)
+	i = 1;
+	while (i < argc)
+	{
+		if (!array_has_only_digits(argv[i]))
+		{
+			printf("an argument has a wrong value");
+			return (1);			
+		}
+		i++;
+	}
+	if (atol(argv[1]) < 1 || atol(argv[2]) < 1 || atol(argv[3]) < 1 || atol(argv[4]) < 0)
 	{
 		printf("an argument has a wrong value");
 		return (1);
 	}
 	if (argc == 6)
 	{
-		if (atol(argv[5]) < 1)
+		if (atol(argv[5]) < 0)
 		{	
 			printf("last arg has a wrong value");
 			return (1);
