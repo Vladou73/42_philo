@@ -1,7 +1,14 @@
 
 #include "./includes/philo.h"
 
-//reprendre ma fonction free null depuis mon push swap
+void	ft_free_null_ptr(void **ptr)
+{
+	if (*ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+}
 
 void    ft_exit(t_game *game)
 {
@@ -15,6 +22,6 @@ void    ft_exit(t_game *game)
         i++;
     }
     pthread_mutex_destroy(&game->lock_death);
-    free(game->philos);
-    free(game->forks);
+    ft_free_null_ptr((void **)&game->philos);
+    ft_free_null_ptr((void **)&game->forks);
 }

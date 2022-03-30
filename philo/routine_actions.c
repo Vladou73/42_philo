@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "./includes/philo.h"
+
 int	ft_dead_routine(t_game *game)
 {
 	int		i;
@@ -23,12 +24,14 @@ int	ft_dead_routine(t_game *game)
 		while (i < game->nb_philos)
 		{
 			pthread_mutex_lock(&game->philos[i].lock_philo);
-			if (ft_gettimeofday_ms() - game->philos[i].last_meal >= game->time_to_die && game->dead_philo == 0)
+			if (ft_gettimeofday_ms() - game->philos[i].last_meal >= game->time_to_die
+				&& game->dead_philo == 0)
 			{
 				pthread_mutex_unlock(&game->philos[i].lock_philo);
 				pthread_mutex_lock(&game->lock_death);	
 				game->dead_philo = 1;
-				printf("%ld %d died\n", ft_gettime_since_game_start(game->start_time), game->philos[i].index);
+				printf("%ld %d died\n", ft_gettime_since_game_start(
+					game->start_time), game->philos[i].index);
 				pthread_mutex_unlock(&game->lock_death);
 				return (1);
 			}

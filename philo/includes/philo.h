@@ -18,7 +18,7 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <pthread.h>
-#include <sys/time.h>
+# include <sys/time.h>
 
 // status 0 = eat, 1 = sleep, 2 = think
 typedef struct s_philo
@@ -55,10 +55,10 @@ int			ft_check_args(int argc, char **argv);
 int			array_has_only_digits(char *arr);
 
 //******************** INIT VARIABLES ********************//
-int		ft_init_game_variables(t_game *game, int argc, char **argv);
-int		ft_init_forks(t_game *game);
-int		ft_init_philos(t_game *game);
-void	ft_init_parsed_variables(t_game *game, int argc, char **argv);
+int			ft_init_game_variables(t_game *game, int argc, char **argv);
+int			ft_init_forks(t_game *game);
+int			ft_init_philos(t_game *game);
+void		ft_init_parsed_variables(t_game *game, int argc, char **argv);
 
 //******************** MEMORY AND TIME ********************//
 void		*ft_calloc(size_t n, size_t size);
@@ -68,18 +68,18 @@ long int	ft_gettime_since_game_start(long start_time);
 void		ft_usleep(long int time, t_philo *philo);
 
 //******************** ROUTINE & ACTIONS ********************//
-int		ft_routine(t_philo *philo);
-int		ft_dead_routine(t_game *game);
-int 	ft_start_thinking(t_philo *philo);
-int		ft_start_sleeping(t_philo *philo);
-int		ft_start_eating(t_philo *philo, int left_fork, int right_fork);
-int		is_a_philo_dead(t_philo *philo);
+int			ft_routine(t_philo *philo);
+int			ft_dead_routine(t_game *game);
+int			ft_start_thinking(t_philo *philo);
+int			ft_start_sleeping(t_philo *philo);
+int			ft_start_eating(t_philo *philo, int left_fork, int right_fork);
+int			is_a_philo_dead(t_philo *philo);
 
 //******************** UTILITIES ********************//
-void	ft_printf(t_philo *philo, char* str);
-int		ft_all_philos_have_eaten_enough(t_game *game);
+void		ft_printf(t_philo *philo, char *str);
+int			ft_all_philos_have_eaten_enough(t_game *game);
 
 //******************** HANDLE EXIT ********************//
-void    ft_exit(t_game *game);
+void		ft_exit(t_game *game);
 
 #endif

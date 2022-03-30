@@ -23,7 +23,7 @@ void	ft_init_parsed_variables(t_game *game, int argc, char **argv)
 		game->nb_times_philos_must_eat = (int)ft_atol(argv[5]);
 	else
 		game->nb_times_philos_must_eat = -1;
-	game->dead_philo=0;
+	game->dead_philo = 0;
 }
 
 int	ft_init_philos(t_game *game)
@@ -57,7 +57,8 @@ int	ft_init_forks(t_game *game)
 {
 	int	i;
 
-	game->forks = ft_calloc((unsigned int)game->nb_philos, sizeof(pthread_mutex_t));
+	game->forks = ft_calloc(
+			(unsigned int)game->nb_philos, sizeof(pthread_mutex_t));
 	if (!game->forks)
 		return (1);
 	i = 0;
