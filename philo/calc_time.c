@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 15:44:31 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/21 17:41:48 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/30 18:34:55 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,3 @@ void	ft_usleep_no_check(long int time)
 	while (ft_gettimeofday_ms() - start < time)
 		usleep(500);
 }
-

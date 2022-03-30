@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:38:12 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/21 17:50:13 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/30 18:54:21 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ int	main(int argc, char **argv)
 		ft_exit(&game);
 		return (1);
 	}
+	ft_exit(&game);
 	return (0);
 }
