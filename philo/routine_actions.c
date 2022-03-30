@@ -15,7 +15,8 @@
 int	ft_dead_routine(t_game *game)
 {
 	int		i;
-	//ft_usleep(1, philo);
+
+	ft_usleep_no_check(1);
 	while (1)
 	{
 		if (ft_all_philos_have_eaten_enough(game))
@@ -37,7 +38,7 @@ int	ft_dead_routine(t_game *game)
 			}
 			pthread_mutex_unlock(&game->philos[i].lock_philo);
 			i++;
-			//ft_usleep(1, &game->philos[i]);
+			ft_usleep_no_check(1);
 		}
 	}
 	return (0);

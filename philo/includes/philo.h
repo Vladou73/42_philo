@@ -66,6 +66,7 @@ void		ft_bzero(void *ptr, size_t n);
 long int	ft_gettimeofday_ms(void);
 long int	ft_gettime_since_game_start(long start_time);
 void		ft_usleep(long int time, t_philo *philo);
+void		ft_usleep_no_check(long int time);
 
 //******************** ROUTINE & ACTIONS ********************//
 int			ft_routine(t_philo *philo);
