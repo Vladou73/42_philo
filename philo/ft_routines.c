@@ -33,7 +33,7 @@ int	ft_dead_loop_check(t_game *game)
 		}
 		pthread_mutex_unlock(&game->philos[i].lock_philo);
 		i++;
-		usleep(2);
+		usleep(50);
 	}
 	return (0);
 }
@@ -65,6 +65,8 @@ int	is_a_philo_dead(t_philo *philo)
 
 int	ft_routine(t_philo *philo)
 {
+	if (philo->index % 2 == 0)
+		usleep(2000);
 	if (philo->game->nb_philos > 1)
 	{
 		while (1)

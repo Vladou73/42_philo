@@ -32,10 +32,12 @@ void	ft_usleep(long int time, t_philo *philo)
 {
 	long int	start;
 
+	(void)philo;
+
 	start = ft_gettimeofday_ms();
 	while (ft_gettimeofday_ms() - start < time)
 	{
-		usleep(500);
+		usleep(100);
 		if (is_a_philo_dead(philo))
 			break ;
 	}

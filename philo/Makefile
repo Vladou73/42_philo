@@ -14,7 +14,7 @@
 
 #VARIABLE=VALUE
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -pthread -fsanitize=thread -g
+CFLAGS = -Wall -Werror -Wextra -pthread #-fsanitize=thread -g
 
 #-Wconversion
 # -fsanitize=undefined
