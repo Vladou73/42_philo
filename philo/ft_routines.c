@@ -40,7 +40,7 @@ int	ft_dead_loop_check(t_game *game)
 
 int	ft_dead_routine(t_game *game)
 {
-	usleep(2);
+	usleep(50);
 	while (1)
 	{
 		if (ft_all_philos_have_eaten_enough(game))
@@ -84,9 +84,11 @@ int	ft_routine(t_philo *philo)
 					return (0);
 				ft_start_sleeping(philo);
 				ft_start_thinking(philo);
-				usleep(1);
+				usleep(50);
 			}
 		}
 	}
+	else
+		ft_printf(philo, "has taken a fork");
 	return (0);
 }
