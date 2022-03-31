@@ -14,15 +14,13 @@
 
 #VARIABLE=VALUE
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -pthread
-#-fsanitize=thread -g
+CFLAGS = -Wall -Werror -Wextra -pthread -fsanitize=thread -g
 
 #-Wconversion
-# -fsanitize=thread -fsanitize=undefined
+# -fsanitize=undefined
 
 NAME = philo
-SRCS = philo.c ft_bzero.c ft_calloc.c ft_atol.c init_variables.c routine_actions.c check_args.c calc_time.c ft_actions.c ft_exit.c ft_utils.c
-# parse_input.c parse_input2.c init_mlx.c handle_moves.c handle_exit.c
+SRCS = philo.c ft_bzero.c ft_calloc.c ft_atol.c init_variables.c ft_routines.c check_args.c calc_time.c ft_actions.c ft_exit.c ft_utils.c
 OBJS=$(SRCS:.c=.o)
 
 #*********** RULES ************

@@ -82,7 +82,7 @@ int	ft_routine(t_philo *philo)
 					return (0);
 				ft_start_sleeping(philo);
 				ft_start_thinking(philo);
-				ft_usleep(1, philo);
+				ft_usleep_no_check(1);
 			}
 		}
 	}

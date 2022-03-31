@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// The atoi() function converts the initial portion
-//of the string pointed to by src to int.
+// The atol() function converts the initial portion
+//of the string pointed to by src to long int.
 
 #include "./includes/philo.h"
 
