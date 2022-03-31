@@ -1,1 +1,1 @@
-cas  ./philo 150 500 200 200 : quand il y a bcp de philos ca ne marche plus
+cas  ./philo 130 500 200 200 : quand il y a bcp de philos ca ne marche plus
