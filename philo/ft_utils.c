@@ -14,10 +14,12 @@
 
 void	ft_printf(t_philo *philo, char *str)
 {
+	pthread_mutex_lock(&philo->game->lock_print);
 	if (!is_a_philo_dead(philo)
 		&& !ft_all_philos_have_eaten_enough(philo->game))
 		printf("%ld %d %s\n", ft_gettime_since_game_start(
 				philo->game->start_time), philo->index, str);
+	pthread_mutex_unlock(&philo->game->lock_print);
 }
 
 int	ft_all_philos_have_eaten_enough(t_game *game)

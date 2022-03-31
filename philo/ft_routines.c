@@ -33,14 +33,14 @@ int	ft_dead_loop_check(t_game *game)
 		}
 		pthread_mutex_unlock(&game->philos[i].lock_philo);
 		i++;
-		usleep(50);
+		usleep(300);
 	}
 	return (0);
 }
 
 int	ft_dead_routine(t_game *game)
 {
-	usleep(50);
+	usleep(100);
 	while (1)
 	{
 		if (ft_all_philos_have_eaten_enough(game))
@@ -84,7 +84,7 @@ int	ft_routine(t_philo *philo)
 					return (0);
 				ft_start_sleeping(philo);
 				ft_start_thinking(philo);
-				usleep(50);
+				usleep(200);
 			}
 		}
 	}

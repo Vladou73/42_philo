@@ -20,11 +20,9 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-// status 0 = eat, 1 = sleep, 2 = think
 typedef struct s_philo
 {
 	int				index;
-	int				status;
 	int				nb_times_eat;
 	long			last_meal;
 	int				left_fork;
@@ -46,6 +44,7 @@ typedef struct s_game
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock_death;
+	pthread_mutex_t	lock_print;
 	pthread_t		dead_thread;
 }	t_game;
 
