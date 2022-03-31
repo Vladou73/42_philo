@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine_actions.c                                  :+:      :+:    :+:   */
+/*   ft_routines.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:46:38 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/30 18:29:24 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/31 15:32:55 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,28 +63,35 @@ int	is_a_philo_dead(t_philo *philo)
 	return (0);
 }
 
-int	ft_routine(t_philo *philo)
+int	ft_act(t_philo *philo)
 {
 	if (philo->index % 2 == 0)
-		usleep(2000);
+		ft_start_eating(philo, philo->left_fork, philo->right_fork);
+	else
+		ft_start_eating(philo, philo->right_fork, philo->left_fork);
+	if (philo->nb_times_eat >= philo->game->nb_times_philos_must_eat
+		&& philo->game->nb_times_philos_must_eat >= 0)
+		return (0);
+	ft_start_sleeping(philo);
+	ft_start_thinking(philo);
+	usleep(50);
+	return (1);
+}
+
+int	ft_routine(t_philo *philo)
+{
 	if (philo->game->nb_philos > 1)
 	{
+		if (philo->index % 2 == 0)
+			usleep(2000);
 		while (1)
 		{
 			if (is_a_philo_dead(philo))
 				return (1);
 			else
 			{
-				if (philo->index % 2 == 0)
-					ft_start_eating(philo, philo->left_fork, philo->right_fork);
-				else
-					ft_start_eating(philo, philo->right_fork, philo->left_fork);
-				if (philo->nb_times_eat >= philo->game->nb_times_philos_must_eat
-					&& philo->game->nb_times_philos_must_eat >= 0)
+				if (ft_act(philo) == 0)
 					return (0);
-				ft_start_sleeping(philo);
-				ft_start_thinking(philo);
-				usleep(200);
 			}
 		}
 	}

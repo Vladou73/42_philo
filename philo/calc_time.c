@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 15:44:31 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/30 18:34:55 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/31 15:29:26 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,10 @@ void	ft_usleep(long int time, t_philo *philo)
 {
 	long int	start;
 
-	(void)philo;
-
 	start = ft_gettimeofday_ms();
 	while (ft_gettimeofday_ms() - start < time)
 	{
-		usleep(100);
+		usleep(200);
 		if (is_a_philo_dead(philo))
 			break ;
 	}

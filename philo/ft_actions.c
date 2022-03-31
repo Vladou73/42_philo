@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:30:35 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/30 18:30:37 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/03/31 15:29:53 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	ft_start_sleeping(t_philo *philo)
 int	ft_start_thinking(t_philo *philo)
 {
 	ft_printf(philo, "is thinking");
-	ft_usleep((philo->game->time_to_eat - philo->game->time_to_sleep) + 1, philo);
+	ft_usleep((philo->game->time_to_eat - philo->game->time_to_sleep)
+		+ 1, philo);
 	return (0);
 }

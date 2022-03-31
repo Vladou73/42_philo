@@ -6,7 +6,7 @@
 #    By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 17:55:57 by vnafissi          #+#    #+#              #
-#    Updated: 2022/03/30 18:35:16 by vnafissi         ###   ########.fr        #
+#    Updated: 2022/03/31 15:28:55 by vnafissi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@
 #VARIABLE=VALUE
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pthread #-fsanitize=thread -g
-
 #-Wconversion
 # -fsanitize=undefined
 
