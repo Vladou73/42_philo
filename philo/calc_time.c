@@ -40,12 +40,3 @@ void	ft_usleep(long int time, t_philo *philo)
 			break ;
 	}
 }
-
-// void	ft_usleep_no_check(long int time)
-// {
-// 	long int	start;
-
-// 	start = ft_gettimeofday_ms();
-// 	while (ft_gettimeofday_ms() - start < time)
-// 		usleep(500);
-// }

@@ -38,16 +38,16 @@ int	array_has_only_digits(char *arr)
 int	ft_args_pos_long(int argc, char **argv)
 {
 	if (ft_atol(argv[1]) < 1 || ft_atol(argv[2]) < 1
-		|| ft_atol(argv[3]) < 1 || ft_atol(argv[4]) < 0)
+		|| ft_atol(argv[3]) < 1 || ft_atol(argv[4]) < 1)
 	{
-		printf("an argument has a wrong value");
+		printf("an argument has a wrong value\n");
 		return (1);
 	}
 	if (argc == 6)
 	{
 		if (ft_atol(argv[5]) < 0)
 		{	
-			printf("last arg has a wrong value");
+			printf("last arg has a wrong value\n");
 			return (1);
 		}
 	}
@@ -60,7 +60,7 @@ int	ft_check_args(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("wrong number of args");
+		printf("wrong number of args\n");
 		return (1);
 	}
 	i = 1;
@@ -68,7 +68,7 @@ int	ft_check_args(int argc, char **argv)
 	{
 		if (!array_has_only_digits(argv[i]))
 		{
-			printf("an argument has a wrong value");
+			printf("an argument has a wrong value\n");
 			return (1);
 		}
 		i++;
