@@ -6,7 +6,7 @@
 /*   By: vnafissi <vnafissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:46:38 by vnafissi          #+#    #+#             */
-/*   Updated: 2022/03/31 15:32:55 by vnafissi         ###   ########.fr       */
+/*   Updated: 2022/04/04 11:11:45 by vnafissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_routine(t_philo *philo)
 	if (philo->game->nb_philos > 1)
 	{
 		if (philo->index % 2 == 0)
-			usleep(2000);
+			usleep(4000);
 		while (1)
 		{
 			if (is_a_philo_dead(philo))
